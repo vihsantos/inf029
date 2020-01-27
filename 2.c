@@ -2,13 +2,23 @@
 #include <stdlib.h>
 
 int contagem_de_digitos(int num);
+int potencia(int base, int expoente);
 
-	int main(){
+int main(){
 
- 	int valor; 
- 	scanf("%d", &valor);
- 	
- 	
+	int valor, invertido=0, n=0;
+	scanf("%d", &valor);
+	
+	n=contagem_de_digitos(valor);
+		
+	while(valor>=1){
+		invertido= invertido +(valor%10)*potencia(10, n-1);
+		n--;
+		valor=valor/10;	
+		}
+	
+	printf("\n%d", invertido);
+	
   return 0;
 }
 
@@ -27,15 +37,13 @@ int contagem_de_digitos(int num ){
 		return contaDigitos;
 }
 
-int revertendo_inteiro(int numero){
+int potencia(int base, int expoente){
 	
-	int n, x, v;
-	char inv[10];
-	
-	n=contagem_de_digitos(numero);
-	
-	for (x=0; x<=n; x++){
-		v= numero%10;
-		sprintf(inv, "%d", v);
-	}	
+	int resul=1;
+		while(expoente>0){
+			resul=resul*base;
+			expoente--;
+		}
+		return resul;
 }
+
