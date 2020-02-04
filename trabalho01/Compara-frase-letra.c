@@ -9,7 +9,7 @@ int main (){
 	printf("Insira uma frase\n");
 	gets(frase);
 	
-	printf("Insira uma frase\n");
+	printf("Insira uma letra\n");
 	letra = getchar();
 	
 	int x=0, cont=0;
