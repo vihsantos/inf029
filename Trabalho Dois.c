@@ -4,7 +4,7 @@
 void inicia_vet(int *pontvet){
   int x;
     for(x=0; x<10; x++){
-      pontvet[x]= -1;
+      pontvet[x]= a;
     }
 }
 
@@ -18,7 +18,7 @@ void inicia_vet(int *pontvet){
 
 int inserir_um_elemento(int *pontvet, int pos, int n){
 	if(pos<10){
-		if(pontvet[pos]==-1){
+		if(pontvet[pos]==a){
 		pontvet[pos]= n;
 		return 0;
 		}
@@ -45,7 +45,7 @@ int inserir_est_aux (int *pontvet, int pos, int quantvet){
 
 int excluir_elemento(int *pontvet, int pos, int elem){
 	if (pos<10){
-		pontvet[pos]=-1;
+		pontvet[pos]==a;
 		return 0;
 	}
 	else {
@@ -63,8 +63,14 @@ int main (){
       inicia_vet(pvet);
 
     printf("TRABALHO DOIS\n");
-    printf("DIGITE 1 PARA INSERIR ELEMENTO.\n DIGITE 2 PARA LISTAR TODAS AS ESTRUTURAS.\n DIGITE 3 PARA LISTAR OS NUMEROS ORDENADOS DAS ESTRUTURAS AUXILIARES.\n DIGITE 4 PARA LISTAR TODOS OS NUMEROS ORDENADOS.\n DIGITE 5 PARA EXCLUIR UM ELEMENTO.\n DIGITE 6 PARA AUMENTAR O TAMANHO DA ESTRUTURA AUXILIAR.\n DIGITE 7 PARA SAIR.\n");
-    scanf("%d", &cod);
+    printf("DIGITE 1 PARA INSERIR ELEMENTO.\n");
+    printf("DIGITE 2 PARA LISTAR TODAS AS ESTRUTURAS.\n");
+    printf("DIGITE 3 PARA LISTAR OS NUMEROS ORDENADOS DAS ESTRUTURAS AUXILIARES.\n");
+    printf("DIGITE 4 PARA LISTAR TODOS OS NUMEROS ORDENADOS.\n");
+    printf("DIGITE 5 PARA EXCLUIR UM ELEMENTO.\n");
+    printf("DIGITE 6 PARA AUMENTAR O TAMANHO DA ESTRUTURA AUXILIAR.\n");
+    printf("DIGITE 7 PARA SAIR.\n");
+	scanf("%d", &cod);
     
     	switch (cod){
     		case 1: {
@@ -74,7 +80,8 @@ int main (){
     			scanf("%d", &res)
     			
     			if (res==1){
-    				printf("Insira a posição em que deseja colocar o seu elemento\n");
+    				
+					printf("Insira a posição em que deseja colocar o seu elemento\n");
     				scanf("%d", &p)
     				printf("Insira o seu elemento\n");
     				scanf("%d", &e)
@@ -82,7 +89,11 @@ int main (){
     				rstd= inserir_um_elemento(pvet, p, e);
     				
 				}
-    			
+    			else {
+    				
+    				
+    				
+				}
 				break;
 			}
 			case 2: {
