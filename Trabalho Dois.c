@@ -8,22 +8,52 @@ void inicia_vet(int *pontvet){
     }
 }
 
-void listar_vet(int *pontvet){
+/*void listar_vet(int *pontvet){
    int x;
     for(x=0; x<10; x++){
       printf("%d ",pontvet[x]);
     }
 }
+*/
 
-int inserir_elemento(int *pontvet, int pos, int n){
-	if(pontvet[pos]==-1){
+int inserir_um_elemento(int *pontvet, int pos, int n){
+	if(pos<10){
+		if(pontvet[pos]==-1){
 		pontvet[pos]= n;
+		return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+	else{
+		return 1;
+	}
+}
+
+int inserir_est_aux (int *pontvet, int pos, int quantvet){
+	if (pos<10){
+		
+	}
+	else {
+		return 1;
+	}
+	
+}
+
+// essa função excluir está errada, é so pra ter uma idéia de como vai ficar
+
+int excluir_elemento(int *pontvet, int pos, int elem){
+	if (pos<10){
+		pontvet[pos]=-1;
 		return 0;
 	}
 	else {
 		return 1;
 	}
 }
+
+// int aumentar_aux (int *pontvet, int pos)
 
 
 int main (){
@@ -38,8 +68,20 @@ int main (){
     
     	switch (cod){
     		case 1: {
+    			int res, p, e, rstd;
+				
+				printf("DIGITE 1 SE DESEJA INSERIR APENAS UM ELEMENTO. \n DIGITE 2 SE DESEJA INCREMENTAR UMA ESTRUTURA AUXILIAR.")
+    			scanf("%d", &res)
     			
-    			
+    			if (res==1){
+    				printf("Insira a posição em que deseja colocar o seu elemento\n");
+    				scanf("%d", &p)
+    				printf("Insira o seu elemento\n");
+    				scanf("%d", &e)
+    				
+    				rstd= inserir_um_elemento(pvet, p, e);
+    				
+				}
     			
 				break;
 			}
