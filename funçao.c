@@ -26,17 +26,33 @@ void excluinum(int vet [], int valor){
 	}
 }
 
+void excluiultimo(int vet[], int ultimo){
+	if (vet[ultimo]!=0){
+		vet[ultimo]=0;
+	}
+	else {
+		ultimo--;
+		excluiultimo(vet, ultimo);
+	}
+}
+
 int main (){
 	
 	int vetor[TAM], excluir;
 	
 	inicializavet(vetor);
-	imprimevet(vetor);
+	//imprimevet(vetor);
 	
-	printf("\nInforme o valor que deseja excluir: ");
+	/* printf("\nInforme o valor que deseja excluir: ");
 	scanf("%d", &excluir);
 	
 	excluinum(vetor, excluir);
+	*/
+	
+	excluiultimo(vetor,TAM);
+	
 	imprimevet(vetor);
+	
+	
 	return 0;
 }
