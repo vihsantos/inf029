@@ -263,9 +263,6 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
 				vetorAux[y]=pvet[x].aux[y];
 				retorno= SUCESSO;
 			}
-				for (x=0; x<TAM; x++){
-					ordenar(vetorAux, x);
-				}
 		}
 		else{
 			retorno=SEM_ESTRUTURA_AUXILIAR;
@@ -292,6 +289,9 @@ int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]){
 				vetorAux[y]=pvet[x].aux[y];
 				retorno= SUCESSO;
 			}
+				for (x=0; x<TAM; x++){
+					ordenar(vetorAux, x);
+				}
 		}
 		else{
 			retorno=SEM_ESTRUTURA_AUXILIAR;
