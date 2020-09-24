@@ -14,7 +14,7 @@
 #define TODAS_ESTRUTURAS_AUXILIARES_VAZIAS -11
 
 typedef struct{
-	int *aux, qtdelementos, pos;	
+	int *aux, qtdelementos, ttaux;	
 }bloco;
 
 bloco pvet[TAM];
@@ -24,77 +24,304 @@ void inicializar(){
 	
 	for(x=0;x<10;x++){
 		pvet[x].aux=NULL;
-		pvet[x].pos=0;
+		pvet[x].ttaux=0;
 		pvet[x].qtdelementos=0;
 	}
-	
 }
 
-// "return=0"=ERRO / "return=1"=SUCESSO
-
-int criarEstruturaAuxiliar(int posicao, int tamanho){
-	int retorno=0;
-	
-	if(pvet[posicao].aux==NULL){
-		pvet[posicao].aux=(int *)malloc(tamanho * sizeof(int));
-		retorno= SUCESSO;
+void finalizar(){
+	int x=0;
+	for(x=0;x<10;x++){
+		free(pvet[x].aux);
 	}
-	else{
-		retorno=JA_TEM_ESTRUTURA_AUXILIAR;
-	}
-	
-	return retorno;
 }
 
-int inserirNumeroEmEstrutura(int posicao, int valor, bloco pvet[TAM]){
-	int retorno=0;
-	if(pvet[posicao].aux!=NULL){
-		pvet[posicao].aux[pvet[posicao].qtdelementos]=valor;
-		pvet[posicao].qtdelementos++;
-		retorno=SUCESSO;
-	}
-	else{
-		retorno=SEM_ESPACO;
-	}
-	return retorno;
+int ehPosicaoValida(int posicao){
+    int retorno = 0;
+    if (posicao < 1 || posicao > 10){
+        retorno = POSICAO_INVALIDA;
+    }else retorno = SUCESSO;
+
+    return retorno;
 }
 
-int excluirNumeroDoFinaldaEstrutura(int posicao){
-	pvet[posicao].aux--;
-	pvet[posicao].qtdelementos--;
-}
-
-int excluirNumeroEspecificoDeEstrutura(int valor, int posicao){	
-	int x, y;
-	for (x=0; x<= pvet[posicao].qtdelementos; x++){
-		if (pvet[posicao].aux[x]==valor){
-			for (y=x; y<=pvet[posicao].qtdelementos-1; y++){
-				pvet[posicao].aux[y]=pvet[posicao].aux[y+1];
+void ordenar(int vetorAux[], int posicao){
+	int i, j, reserva;
+	for(i=0;i<pvet[posicao].qtdelementos;i++){
+		for(j=i+1;j<pvet[posicao].qtdelementos; j++){
+			if(vetorAux[i]>vetorAux[j]){
+				reserva=vetorAux[i];
+				vetorAux[i]=vetorAux[j];
+				vetorAux[j]=reserva;
 			}
 		}
 	}
 }
 
-int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-	int x;
-	for (x=0; x<=pvet[posicao].qtdelementos ;x++){
-		vetorAux[x]=pvet[posicao].aux[x];
-	}	
-}
-int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-	int x;
-	for (x=0; x<=pvet[posicao].qtdelementos; x++){
-		vetorAux[x]=pvet[posicao].aux[x];
+int criarEstruturaAuxiliar(int posicao, int tamanho){
+	int retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if (resposta==-1){
+		posicao--;
+		if (tamanho>=1){
+			if(pvet[posicao].aux==NULL){
+				pvet[posicao].aux=(int *)malloc(tamanho * sizeof(int));
+				pvet[posicao].ttaux=tamanho;
+				retorno= SUCESSO;
+			}
+			else{
+				retorno=JA_TEM_ESTRUTURA_AUXILIAR;
+			}	
+		}
+		else{
+			retorno= TAMANHO_INVALIDO;
+		}	
+	}
+	else{
+		retorno=POSICAO_INVALIDA;
 	}
 	
+	return retorno;
+}
+
+int inserirNumeroEmEstrutura(int valor, int posicao){
+	int retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;	
+		if(pvet[posicao].aux!=NULL){
+			if(pvet[posicao].qtdelementos<=pvet[posicao].ttaux){
+				pvet[posicao].aux[pvet[posicao].qtdelementos]=valor;
+				pvet[posicao].qtdelementos++;
+				retorno=SUCESSO;
+			}
+			else{
+				retorno=SEM_ESPACO;
+			}
+		}
+		else{
+			retorno=SEM_ESTRUTURA_AUXILIAR;
+		}
+	}
+	else{
+		retorno= POSICAO_INVALIDA;
+	}
+	return retorno;
+}
+
+int excluirNumeroDoFinaldaEstrutura(int posicao){
+	int retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;		
+		if(pvet[posicao].aux!=NULL){
+			if(pvet[posicao].qtdelementos!=0){
+				pvet[posicao].aux[pvet[posicao].qtdelementos]=pvet[posicao].aux[pvet[posicao].qtdelementos+1];
+				pvet[posicao].qtdelementos--;
+				retorno=SUCESSO;
+			}
+			else{
+				retorno=ESTRUTURA_AUXILIAR_VAZIA;
+			}
+	
+		}
+		else{
+			retorno=SEM_ESTRUTURA_AUXILIAR;
+		}
+	}
+	else{
+		retorno= POSICAO_INVALIDA;
+	}
+	
+	return retorno;
+}
+
+int excluirNumeroEspecificoDeEstrutura(int posicao, int valor){	
+	int x, y, retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;
+		if(pvet[posicao].aux!=NULL){
+			if(pvet[posicao].qtdelementos!=0){
+				for(x=0; x<pvet[posicao].qtdelementos; x++){
+					if(pvet[posicao].aux[x]==valor){
+						for(y=x; y<pvet[posicao].qtdelementos-1; y++){
+							pvet[posicao].aux[y]=pvet[posicao].aux[y+1];
+						}
+						retorno=SUCESSO;
+						pvet[posicao].qtdelementos--;
+					}
+					else{
+						retorno=NUMERO_INEXISTENTE;
+					}
+				}
+			}
+			else{
+				retorno=ESTRUTURA_AUXILIAR_VAZIA;
+			}
+		}
+		else{
+				retorno=SEM_ESTRUTURA_AUXILIAR;
+		}
+	}
+	else{
+		retorno= POSICAO_INVALIDA;
+	}
+	return retorno;
+}
+
+int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
+	int x, retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;
+		if(pvet[posicao].aux!=NULL){
+			for (x=0; x<pvet[posicao].qtdelementos;x++){
+				vetorAux[x]=pvet[posicao].aux[x];
+				retorno= SUCESSO;
+			}
+		}
+		else{
+			retorno=SEM_ESTRUTURA_AUXILIAR;
+		}
+	}
+	else{
+		retorno=POSICAO_INVALIDA;
+	}	
+
+	return retorno;
+}
+
+int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[]){
+	int x, retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;
+		if(pvet[posicao].aux!=NULL){
+			for (x=0; x<pvet[posicao].qtdelementos ;x++){
+				vetorAux[x]=pvet[posicao].aux[x];
+				retorno= SUCESSO;
+			}
+			ordenar(vetorAux, posicao);
+		}
+		else{
+			retorno=SEM_ESTRUTURA_AUXILIAR;
+		}
+	}
+	else{
+		retorno=POSICAO_INVALIDA;
+	}	
+
+	return retorno;
+	}
+
+
+int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
+	int retorno=0, tamanhonew;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;
+		tamanhonew= novoTamanho + pvet[posicao].ttaux;
+		if (tamanhonew>=1){
+			if(pvet[posicao].aux==NULL){
+				retorno=SEM_ESTRUTURA_AUXILIAR;
+			}
+			else{
+				pvet[posicao].aux=(int *)malloc(tamanhonew * sizeof(int));
+				pvet[posicao].ttaux=tamanhonew;
+				retorno= SUCESSO;
+			}	
+		}
+		else{
+			retorno= TAMANHO_INVALIDO;
+		}		
+	}
+	else{
+		retorno=POSICAO_INVALIDA;
+	}
+
+	return retorno;
+}
+
+int getQuantidadeElementosEstruturaAuxiliar(int posicao){
+	int retorno=0;
+	int resposta= ehPosicaoValida(posicao);
+	if(resposta==-1){
+		posicao--;
+		if(pvet[posicao].aux!=NULL){
+			if(pvet[posicao].qtdelementos>0){
+				return pvet[posicao].qtdelementos;
+			}
+			else{
+				retorno=ESTRUTURA_AUXILIAR_VAZIA;
+			}
+		}
+	}
+	else{
+		retorno=POSICAO_INVALIDA;		
+	}
+	return retorno;
+}
+
+int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
+	int x, y, retorno=0, resultado;
+	
+	for(x=0; x<TAM; x++){
+		if(pvet[x].aux!=NULL){
+			for(y=0; y<pvet[x].qtdelementos;y++){
+				vetorAux[y]=pvet[x].aux[y];
+				retorno= SUCESSO;
+			}
+		}
+		else{
+			retorno=SEM_ESTRUTURA_AUXILIAR;
+		}
+	}
+	return retorno;
 }
 
 int main (){
-	int resultado;
+	int x, resultado, rere, vet[4], lala, a, b, ex, set, ex2, nav[4];
 	
 	inicializar();
-	
 	resultado=criarEstruturaAuxiliar(2, 10);
-	printf("O resultado eh : %d", resultado);
+	rere=inserirNumeroEmEstrutura(9,2);
+	b=inserirNumeroEmEstrutura(2,2);
+	lala= inserirNumeroEmEstrutura(6,2);
+	a=inserirNumeroEmEstrutura(8,2);
+	
+	
+	ex=getDadosOrdenadosEstruturaAuxiliar(2, vet);
+	
+	
+	for(x=0;x<4;x++){
+		printf("---- %d", vet[x]);
+	}
+
+/*	resultado=criarEstruturaAuxiliar(2, 10);
+	printf("\nO resultado eh : %d", resultado);
+	
+	rere=inserirNumeroEmEstrutura(2, 5);
+	b=inserirNumeroEmEstrutura(2, 8);
+	printf("\nO resultado eh : %d", rere);
+	a=getDadosEstruturaAuxiliar(2, vet);
+	int x;
+	for(x=0;x<2;x++){
+		printf("\n %d", vet[x]);
+	}
+	
+	printf("%d", a);
+*/
+
+/*
+	lala=inserirNumeroEmEstrutura(2, 6);
+	a=inserirNumeroEmEstrutura(2, 7);
+	b=inserirNumeroEmEstrutura(2, 8);
+	
+	printf(" %d ", pvet[2].aux[0]);
+	printf("%d ", pvet[2].aux[1]);
+	printf("%d ", pvet[2].aux[2]);
+	printf("%d ", pvet[2].aux[3]);
+*/
 	return 0;
 }

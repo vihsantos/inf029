@@ -3,10 +3,11 @@
 #define TAM 5
 void inicializavet (int vet[]){
 	int x;
-	for(x=0; x<TAM; x++){
-		printf("Insira um numero: \n");
-		scanf("%d", &vet[x]);
-	}
+		vet[0]=8;
+		vet[1]=9;
+		vet[2]=2;
+		vet[3]=1;
+		vet[4]=5;
 }
 void imprimevet(int vet[]){
 	int x;
@@ -17,15 +18,15 @@ void imprimevet(int vet[]){
 void excluinum(int vet [], int valor){
 	int x, y, ultimo;
 	ultimo=TAM;
-	for(x=0; x<=ultimo; x++){
+	for(x=0; x<ultimo; x++){
 		if (vet[x]==valor){
-			for(y=x; y<=ultimo-1; y++){
+			for(y=x; y<ultimo-1; y++){
 				vet[y]=vet[y+1];
 			}
+				ultimo--;
 		}
 	}
 }
-
 void excluiultimo(int vet[], int ultimo){
 	if (vet[ultimo]!=0){
 		vet[ultimo]=0;
@@ -43,13 +44,12 @@ int main (){
 	inicializavet(vetor);
 	//imprimevet(vetor);
 	
-	/* printf("\nInforme o valor que deseja excluir: ");
+	printf("\nInforme o valor que deseja excluir: ");
 	scanf("%d", &excluir);
-	
 	excluinum(vetor, excluir);
-	*/
+
 	
-	excluiultimo(vetor,TAM);
+//	excluiultimo(vetor,TAM);
 	
 	imprimevet(vetor);
 	
