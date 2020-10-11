@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define TAM 5
+
+
 void inicializavet (int vet[]){
 	int x;
 		vet[0]=8;
@@ -39,19 +41,19 @@ void excluiultimo(int vet[], int ultimo){
 
 int main (){
 	
-	int vetor[TAM], excluir;
-	
+	int vetor[TAM], excluir, resultado;
+
 	inicializavet(vetor);
 	//imprimevet(vetor);
 	
-	printf("\nInforme o valor que deseja excluir: ");
+/*	printf("\nInforme o valor que deseja excluir: ");
 	scanf("%d", &excluir);
 	excluinum(vetor, excluir);
-
+*/
 	
 //	excluiultimo(vetor,TAM);
 	
-	imprimevet(vetor);
+	//imprimevet(vetor);
 	
 	
 	return 0;

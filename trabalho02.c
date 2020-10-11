@@ -19,6 +19,14 @@ typedef struct{
 
 bloco pvet[TAM];
 
+
+typedef struct reg {
+	int conteudo;
+  struct reg *prox;
+} No;
+
+No *inicio=NULL;
+
 void inicializar(){
 	int x;
 	
@@ -278,6 +286,38 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
 		}
 	}
 	return retorno;
+}
+
+No* montarListaEncadeadaComCabecote(){
+	int valor, x, y;
+	No *v;
+	
+	v=(No*) malloc(sizeof(No));
+	
+	if(v==NULL){
+		return NULL;
+	}
+	
+	for(x=0; x<10; x++){
+		valor=getQuantidadeElementosEstruturaAuxiliar(x);
+		if(valor=0){
+			return NULL;
+		}
+		else {
+			for (y=0;y<=valor; y++){
+				v->conteudo = pvet[x].aux[y];
+   				v->prox = NULL;
+   				
+   				if (inicio==NULL){
+   					inicio = v;
+				}	
+   				else {
+	  				v->prox = inicio;
+	  				inicio  = v;
+					}
+			}
+		}
+	}
 }
 
 int main (){

@@ -9,6 +9,7 @@
 #define NUMERO_INEXISTENTE -9
 #define NOVO_TAMANHO_INVALIDO -10
 #define TODAS_ESTRUTURAS_AUXILIARES_VAZIAS -11
+#define TAM 10
 
 typedef struct{
 	int *aux, qtdelementos, ttaux;	
@@ -20,6 +21,8 @@ typedef struct reg {
 	int conteudo;
   struct reg *prox;
 } No;
+
+No *inicio= NULL;
 
 void ordenar(int vetorAux[], int posicao);
 int criarEstruturaAuxiliar(int tamanho, int posicao);
@@ -35,6 +38,7 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao);
 No* montarListaEncadeadaComCabecote();
 void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]);
 void destruirListaEncadeadaComCabecote(No** inicio);
+void ordenar(int vetorAux[], int posicao);
 
 void inicializar();
 void finalizar();

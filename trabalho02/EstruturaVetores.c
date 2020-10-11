@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define TAM 10
-
 
 #include "EstruturaVetores.h"
 
@@ -12,6 +10,18 @@ void dobrar(int *x){
     *x = *x * 2;
 
 
+}
+void ordenar(int vetorAux[], int posicao){
+	int i, j, reserva;
+	for(i=0;i<pvet[posicao].qtdelementos;i++){
+		for(j=i+1;j<pvet[posicao].qtdelementos; j++){
+			if(vetorAux[i]>vetorAux[j]){
+				reserva=vetorAux[i];
+				vetorAux[i]=vetorAux[j];
+				vetorAux[j]=reserva;
+			}
+		}
+	}
 }
 /*
 Objetivo: criar estrutura auxiliar na posição 'posicao'.
@@ -375,9 +385,37 @@ Retorno (No*)
     No*, ponteiro para o início da lista com cabeçote
 */
 No* montarListaEncadeadaComCabecote(){
-
-    return NULL;
-
+	
+	int valor, x, y;
+	No *v;
+	
+	v=(No*) malloc(sizeof(No));
+	
+	if(v==NULL){
+		return NULL;
+	}
+	
+	for(x=0; x<10; x++){
+		valor=getQuantidadeElementosEstruturaAuxiliar(x);
+		if(valor=0){
+			return NULL;
+		}
+		else {
+			for (y=0;y<=valor; y++){
+				v->conteudo = pvet[x].aux[y];
+   				v->prox = NULL;
+   				
+   				if (inicio==NULL){
+   					inicio = v;
+				}	
+   				else {
+	  				v->prox = inicio;
+	  				inicio  = v;
+					}
+				return inicio;
+			}
+		}
+	}
 }
 
 /*
