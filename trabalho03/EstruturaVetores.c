@@ -212,8 +212,8 @@ Retorno (int)
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
 	int x, retorno=0;
 	int resposta, v;
-  v=posicao;
-  resposta= ehPosicaoValida(v);
+  	v=posicao;
+  	resposta= ehPosicaoValida(v);
 	if(resposta==-1){
 		posicao--;
 		if(pvet[posicao].aux!=NULL){
@@ -280,50 +280,41 @@ Rertono (int)
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
-	int x, y, retorno=0, resultado;
-	
+	int x, y, retorno=0, d=0;
 	for(x=0; x<TAM; x++){
 		if(pvet[x].aux!=NULL){
-			for(y=0; y<pvet[x].qtdelementos;y++){
-				vetorAux[y]=pvet[x].aux[y];
+			for (y=0; y<pvet[x].qtdelementos ;y++){
+				vetorAux[d]=pvet[x].aux[y];
+				d++;
 				retorno= SUCESSO;
-			}
+			}	
 		}
 		else{
 			retorno=SEM_ESTRUTURA_AUXILIAR;
-		}
+		}	
 	}
 	return retorno;
+	
 }
 
-/*
-Objetivo: retorna os números ordenados de todas as estruturas auxiliares.
+/* Objetivo: retorna os números ordenados de todas as estruturas auxiliares.
 os números devem ser armazenados em vetorAux
 
 Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+
 */
+
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]){
-	int x, y, retorno=0, resultado;
+	int x, y, retorno=0, soma=0;
 	
-	for(x=0; x<TAM; x++){
-		if(pvet[x].aux!=NULL){
-			for(y=0; y<pvet[x].qtdelementos;y++){
-				vetorAux[y]=pvet[x].aux[y];
-				retorno= SUCESSO;
-			}
-				for (x=0; x<TAM; x++){
-					ordenar(vetorAux, x);
-				}
-		}
-		else{
-			retorno=SEM_ESTRUTURA_AUXILIAR;
-		}
-	}
+	
+	
 	return retorno;
 }
+
 
 /*
 Objetivo: modificar o tamanho da estrutura auxiliar da posição 'posicao' para o novo tamanho 'novoTamanho' + tamanho atual
@@ -396,80 +387,8 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao){
 
 }
 
-/*
-Objetivo: montar a lista encadeada com cabeçote com todos os números presentes em todas as estruturas.
-
-Retorno (No*)
-    NULL, caso não tenha nenhum número nas listas
-    No*, ponteiro para o início da lista com cabeçote
-*/
-No* montarListaEncadeadaComCabecote(){
-	int valor, x, y;
-	No *v;
-	
-	v=(No*) malloc(sizeof(No));
-	if(v==NULL){
-		return NULL;
-	}
-	for(x=0; x<10; x++){
-		valor=getQuantidadeElementosEstruturaAuxiliar(x);
-		if(valor==0){
-			return NULL;
-		}
-		else {
-			for (y=0;y<=valor; y++){
-				v->conteudo=pvet[x].aux[y];
-   				v->prox=NULL;
-   				
-   				if (inicio==NULL){
-   					inicio=v;
-				}	
-   				else {
-	  				v->prox=inicio;
-	  				inicio=v;
-					}
-				return inicio;
-			}
-		}
-	}
-}
-/*
-Objetivo: retorna os números da lista enceada com cabeçote armazenando em vetorAux.
-Retorno void
-*/
-void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
-	No *v;
-	int cont=0;
-	v = inicio;
-	while (v !=NULL) {
-	  vetorAux[cont]=v->conteudo;
-	  v = v->prox;
-	  cont++;
-	}	
-}
-
-/*
-Objetivo: Destruir a lista encadeada com cabeçote a partir de início.
-O ponteiro inicio deve ficar com NULL.
-
-Retorno 
-    void.
-*/
-void destruirListaEncadeadaComCabecote(No** inicio){
-  No *v;
-  v = (*inicio)->prox;
-  free(*inicio);
-  (*inicio) = v;
-}
-
-/*
-Objetivo: inicializa o programa. deve ser chamado ao inicio do programa 
-
-*/
-
 void inicializar(){
   int x;
-	inicio=NULL;
 	
 	for(x=0;x<10;x++){
 		pvet[x].aux=NULL;
@@ -489,5 +408,46 @@ void finalizar(){
     for(x=0;x<10;x++){
       free(pvet[x].aux);
     }
+}
+
+int main (){
+	int x, vet[x], soma, y;
+	FILE *abrir;
+	inicializar();
+	
+	criarEstruturaAuxiliar(5,2);
+	criarEstruturaAuxiliar(3,1);
+	criarEstruturaAuxiliar(2,8);
+	inserirNumeroEmEstrutura(15, 1);
+	inserirNumeroEmEstrutura(20, 1);
+	inserirNumeroEmEstrutura(25, 1);
+	inserirNumeroEmEstrutura(3, 2);
+	inserirNumeroEmEstrutura(1, 2);
+	inserirNumeroEmEstrutura(2, 2);
+	inserirNumeroEmEstrutura(4, 2);
+	inserirNumeroEmEstrutura(4, 2);
+	inserirNumeroEmEstrutura(250, 8);
+	inserirNumeroEmEstrutura(252, 8);
+	getDadosDeTodasEstruturasAuxiliares(vet);
+	
+	for(x=0;x<TAM;x++){
+		soma=soma+pvet[x].qtdelementos;
+	}
+	
+	printf("%d", soma);
+	
+	abrir=fopen("t3.txt", "w");
+	if(abrir==NULL){
+		printf("Erro ao abrir o arquivo");
+	}
+	else{
+		int d;
+		for(d=0; d<10; d++){
+			fprintf(abrir,"%d \n",vet[d]);
+		}
+		fclose(abrir);
+	}	
+
+	return 0;
 }
 

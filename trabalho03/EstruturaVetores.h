@@ -17,13 +17,6 @@ typedef struct{
 
 bloco pvet[TAM];
 
-typedef struct reg {
-	int conteudo;
-  struct reg *prox;
-} No;
-
-No *inicio;
-
 void ordenar(int vetorAux[], int posicao);
 int ehPosicaoValida(int posicao);
 int criarEstruturaAuxiliar(int tamanho, int posicao);
@@ -36,9 +29,6 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]);
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]);
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho);
 int getQuantidadeElementosEstruturaAuxiliar(int posicao);
-No* montarListaEncadeadaComCabecote();
-void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]);
-void destruirListaEncadeadaComCabecote(No** inicio);
 void ordenar(int vetorAux[], int posicao);
 void inicializar();
 void finalizar();

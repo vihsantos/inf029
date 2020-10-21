@@ -320,6 +320,24 @@ No* montarListaEncadeadaComCabecote(){
 	}
 }
 
+void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
+	No *v;
+	int cont=0;
+
+	v = inicio;
+	while (v !=NULL) {
+	    vetorAux[cont]=v->conteudo;
+	    v = v->prox;
+	    cont++;
+	}	
+}
+void destruirListaEncadeadaComCabecote(No** inicio){
+	No *v;
+    v = (*inicio)->prox;
+    free(*inicio);
+    (*inicio) = v;
+}
+
 int main (){
 	int x, resultado, rere, vet[4], lala, a, b, ex, set, ex2, nav[4];
 	
